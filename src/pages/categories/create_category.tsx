@@ -56,7 +56,6 @@ function CreateCategory() {
 
   return (
     <>
-      <Header />
       <div
         className="flex justify-center items-center min-h-screen bg-gray-50"
         dir="rtl"

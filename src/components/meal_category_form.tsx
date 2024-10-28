@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Header from "./header";
+import Card from "./Card";
+import axiosClient from "@/helpers/axios-client";
 
 const MealCategoryForm = () => {
   const [categoryName, setCategoryName] = useState("");
   const [categoryImage, setCategoryImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  console.log(previewImage,'prevew img')
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -21,13 +24,22 @@ const MealCategoryForm = () => {
     formData.append("categoryName", categoryName);
     formData.append("categoryImage", categoryImage);
 
+
     console.log("اسم التصنيف:", categoryName);
     console.log("تم رفع الصورة:", categoryImage);
+
+    axiosClient.post('categories',{
+      name:categoryName,
+      image:previewImage
+    }).then(({data})=>{
+      console.log(data,'data')
+    })
 
     // Clear form after submission
     setCategoryName("");
     setCategoryImage(null);
     setPreviewImage(null);
+
   };
 
   // Handle file input change and preview
@@ -45,16 +57,17 @@ const MealCategoryForm = () => {
     }
   };
 
+  
   return (
     <>
-      <Header />
-      <div className="max-w-md mx-auto mt-10 p-4 bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">إضافة صنف وجبة</h2>
+      <div dir="rtl" className="max-w-md mx-auto mt-10 p-4 bg-white shadow-md rounded-lg">
+        <h2 style={{ textAlign: "right" }} className="text-2xl font-bold mb-4">إضافة صنف وجبة</h2>
         <form onSubmit={handleSubmit}>
           {/* Category Name Input */}
           <div className="mb-4">
             <label
               htmlFor="categoryName"
+              style={{ textAlign: "right", display: "block" }}
               className="block text-sm font-medium text-gray-700"
             >
               اسم التصنيف
@@ -74,6 +87,7 @@ const MealCategoryForm = () => {
           <div className="mb-4">
             <label
               htmlFor="categoryImage"
+              style={{ textAlign: "right", display: "block" }}
               className="block text-sm font-medium text-gray-700"
             >
               صورة الصنف
@@ -91,7 +105,7 @@ const MealCategoryForm = () => {
           {/* Image Preview */}
           {previewImage && (
             <div className="mb-4">
-              <p className="text-sm text-gray-700">معاينة الصورة:</p>
+              <p style={{ textAlign: "right" }} className="text-sm text-gray-700">معاينة الصورة:</p>
               <img
                 src={previewImage}
                 alt="معاينة الصورة"

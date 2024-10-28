@@ -1,13 +1,28 @@
-import { Paper, createTheme, styled } from "@mui/material";
-import createCache from "@emotion/cache";
-import { prefixer } from "stylis";
-import stylisRTLPlugin from "stylis-plugin-rtl";
-import axiosClient from "../../axios-client";
+import { Paper, styled } from "@mui/material";
+import { createTheme, Theme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
+import createCache from '@emotion/cache';
 
+// Consuming the outer theme is only required with coexisting themes, like in this documentation.
+// If your app/website doesn't deal with this, you can have just:
+// const theme = createTheme({ direction: 'rtl' })
+export const theme = (outerTheme: Theme) =>
+  createTheme({
+    direction: 'rtl',
+   
+  });
+
+export const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
+});
 // export const host = 'sahara-pharma.com'
 export const schema = "http";
 export const host = "127.0.0.1";
 // export const host = 'server1'مركز النعيم
+
 
 export function blurForNoramlUsers() {
   // return classname has filter properties
@@ -56,23 +71,7 @@ export const notifyMe = (title, data, address, action) => {
 };
 
 
-export const cacheRtl = createCache({
-  key: "muirtl",
-  stylisPlugins: [prefixer, stylisRTLPlugin],
-});
-export const ltrCache = createCache({
-  key: "mui",
-});
-export const theme = createTheme({
-  palette: {
-    mode: "dark",
-  },
 
-  direction: "rtl",
-  typography: {
-    fontFamily: [].join(","),
-  },
-});
 
 export const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

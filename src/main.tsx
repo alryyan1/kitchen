@@ -5,9 +5,22 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router.tsx";
 import { Toaster } from "./components/ui/toaster.tsx";
 
+import { AuthProvider } from "./contexts/stateContext.tsx";
+import { CacheProvider } from "@emotion/react";
+import { cacheRtl, theme } from "./helpers/constants.ts";
+import { ThemeProvider } from "@mui/material";
+
+
+
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
+  // <StrictMode>
+  <AuthProvider>
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </CacheProvider>
     <Toaster />
-  </StrictMode>
+  </AuthProvider>
+  // </StrictMode>
 );

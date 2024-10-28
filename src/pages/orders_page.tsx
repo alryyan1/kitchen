@@ -57,19 +57,18 @@ const OrdersPage = () => {
 
   return (
     <>
-      <Header />
       <div className="container mx-auto px-4 py-8" dir="rtl">
         {/* Cards for actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <CardLink
             title="إضافة طلب جديد"
             description="قم بإضافة طلب جديد إلى النظام"
-            href="/create-new-order"
+            href="/create_new_order"
           />
           <CardLink
             title="إضافة قسم جديد"
             description="قم بإضافة تصنيف جديد"
-            href="/create-category"
+            href="/create_new_category"
           />
           <CardLink
             title="إضافة صنف جديد"
