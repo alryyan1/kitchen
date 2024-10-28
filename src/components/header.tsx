@@ -8,6 +8,7 @@ import { LoadingButton } from "@mui/lab";
 import { Typography } from "@mui/material";
 import { useAuthContext } from "@/contexts/stateContext";
 import axiosClient from "@/helpers/axios-client";
+import { margin } from "@mui/system";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,15 +54,24 @@ const Header = () => {
           <Link to="/settings" className="text-lg hover:underline">
             الإعدادات
           </Link>
+
           <LoadingButton
             onClick={logoutHandler}
             loading={loading}
+            style={{ padding: 0, fontFamily: "Almarai" }}
             size="large"
             color="inherit"
             aria-label="logout"
             sx={{ mr: 2 }}
           >
-            <LogOutIcon />
+            تسجيل الخروج{" "}
+            <img
+              src="/src/assets/icons/switch.png"
+              alt="Logout"
+              style={{ margin: "0 5px" }}
+              width={30}
+              height={30}
+            />
           </LoadingButton>
         </nav>
 
