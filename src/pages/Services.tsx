@@ -43,6 +43,11 @@ function Services() {
     const [childId, setChildId] = useState(null);
     const [update, setUpdate] = useState(0);
     const [showAddDepositDialog, setShowAddDepositDialog] = useState(false);
+    const handleClose = () => {
+      setShowAddDepositDialog(false);
+      setUpdate((u) => u + 1);
+    };
+  
   return (
     <>
       <Grid container spacing={2}>
@@ -98,6 +103,10 @@ function Services() {
                           color="success"
                           onClick={() => {
                             // handleAddCost(service);
+                            setShowAddDepositDialog(true);
+                        setChildId(service.id);
+                        setChildName(info.childName);
+                        setMealName(info.mealName);
                           }}
                         >
                            اضافه كميه
@@ -112,7 +121,7 @@ function Services() {
             <DepositDialog
         update
         selectedChild={childId}
-        service={chsilsdName}
+        service={''}
         open={showAddDepositDialog}
         handleClose={handleClose}
       />
