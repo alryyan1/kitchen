@@ -52,9 +52,7 @@ const ProductForm = ({handleClose,open}) => {
 
   return (
     <Card sx={{ p: 1 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        {t("addService")}
-      </Typography>
+     
       <form style={{ direction: "rtl" }} onSubmit={handleSubmit(submitForm)}>
         <Stack
           direction={"column"}
@@ -66,6 +64,7 @@ const ProductForm = ({handleClose,open}) => {
         >
           {/* Name Field */}
           <TextField
+            sx={{minWidth:'300px'}}
             size="small"
             label={t("name")}
             fullWidth

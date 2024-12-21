@@ -36,7 +36,7 @@ function MealCategoryPanel({setSelectedOrder,selectedOrder,setOrders}:MealCatego
     {/* Sidebar */}
     <div className="">
       <h2 className="text-xl font-semibold mb-6 text-gray-800">
-        {t('category')}  
+        المتاجر
       </h2>
       <ul className="space-y-4">
         {data.map((category: Category) => (

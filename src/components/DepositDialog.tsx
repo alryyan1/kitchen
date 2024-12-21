@@ -6,13 +6,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axiosClient from "@/helpers/axios-client";
-import { AxiosResponseProps, ChildMeal, Meal } from "@/Types/types";
+import { AxiosResponseProps, ChildMeal, Meal, Service } from "@/Types/types";
 import MealChildrenTable, {
   MealChildrenTableMobile,
 } from "./MealChildrenTable";
@@ -24,7 +25,8 @@ interface DepositDialogProbs {
   handleClickOpen: () => void;
   selectedChild: number | null;
   mealName:string;
-  childName:string
+  childName:string;
+  service:Service
 }
 
 const DepositDialog = ({
@@ -33,6 +35,7 @@ const DepositDialog = ({
   selectedChild,
   mealName,
   childName,
+  service
 }: DepositDialogProbs) => {
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -61,6 +64,29 @@ const DepositDialog = ({
         <DialogContent className="">
           {/* <Typography>اضافه للمخزن</Typography> */}
 
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <Stack gap={2} alignItems={'center'} justifyContent={'center'} direction={"row"}>
+
+              <TextField
+               autoFocus
+                label="العدد"
+                {...register("quantity",{
+                  required: "العدد مطلوب",
+                  min: {
+                    value: 1,
+                    message: "العدد يجب أن يكون على الأقل 1",
+                  },
+                })}
+                helperText={errors?.quantity != null && errors.quantity.message}
+                size="small"
+              ></TextField>
+               <Button size='small'  type="submit" variant="contained">
+                <Plus/>
+              </Button>
+           
+            </Stack>
+          </form>
+          <Divider/>
           <form onSubmit={handleSubmit(submitHandler)}>
             <Stack gap={2} alignItems={'center'} justifyContent={'center'} direction={"row"}>
 

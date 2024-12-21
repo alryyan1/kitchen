@@ -17,6 +17,8 @@ import { Stack } from "@mui/system";
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useCustomerStore } from "./Customer/useCustomer";
+import { Customer } from "@/Types/types";
 
 function Stats() {
   const { t } = useTranslation('stats'); // Using the i18n hook for translations
@@ -28,10 +30,10 @@ function Stats() {
   const [childId, setChildId] = useState(null);
   const [update, setUpdate] = useState(0);
   const [showAddDepositDialog, setShowAddDepositDialog] = useState(false);
-    const { fetchCategories, categories, add } = useCategoryStore((state) => state);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const {fetchData ,customers} = useCustomerStore()
     useEffect(() => {
-      fetchCategories();
+      fetchData();
     }, []);
   const handleClose = () => {
     setShowAddDepositDialog(false);
@@ -40,11 +42,11 @@ function Stats() {
 
   useEffect(() => {
     axiosClient.post(`orderMealsStats?date=${searchQuery}`,{
-      category:selectedCategory?.id
+      customer:selectedCustomer?.id
     }).then(({ data }) => {
       setData(data);
     });
-  }, [searchQuery, update,selectedCategory]);
+  }, [searchQuery, update,selectedCustomer]);
 
   data = data.filter((d) => {
     return (
@@ -71,13 +73,13 @@ function Stats() {
             size="small"
           />
           <Stack direction={'row'} gap={1}>
-                   {categories.map((s) => (
+                   {customers.filter((c)=>c.is_store).map((s) => (
                 <Chip
                   sx={{fontFamily:'cairo'}}
-                  color={s.id === selectedCategory?.id ? "primary" : "default"}
-                  variant={s.id === selectedCategory?.id ? "filled" : "outlined"}
+                  color={s.id === selectedCustomer?.id ? "primary" : "default"}
+                  variant={s.id === selectedCustomer?.id ? "filled" : "outlined"}
                   key={s.id}
-                  onClick={() => setSelectedCategory(s)}
+                  onClick={() => setSelectedCustomer(s)}
                   label={s.name} // Translate statuses
                 />
               ))}

@@ -88,14 +88,14 @@ const MealTable: React.FC = ({selectedCategory}) => {
        }} color='primary'><Plus/></IconButton></Tooltip> 
 
       <Typography variant="h5" textAlign="center">
-        {t('basicServices')} <span className='text-gray-500'> ({selectedCategory?.name})</span>
+       <span className='text-gray-500'> ({selectedCategory?.name})</span>
       </Typography>
       <Table size="small" className="text-sm border border-gray-300">
         <TableHead className="bg-gray-100">
           <TableRow>
             <TableCell>{t('code')}</TableCell>
             <TableCell>{t('name')}</TableCell>
-            <TableCell>{t('price')}</TableCell>
+            {/* <TableCell>{t('price')}</TableCell> */}
             <TableCell>{t('category')}</TableCell>
             <TableCell>{t('image')}</TableCell>
             <TableCell>{t('uploadImage')}</TableCell>
@@ -122,9 +122,9 @@ const MealTable: React.FC = ({selectedCategory}) => {
               <TdCell table="meals" colName="name" item={meal}>
                 {meal.name}
               </TdCell>
-              <TdCell sx={{width:'50px',textAlign:'center'}} table="meals" colName="price" item={meal}>
+              {/* <TdCell sx={{width:'50px',textAlign:'center'}} table="meals" colName="price" item={meal}>
                 {meal.price}
-              </TdCell>
+              </TdCell> */}
               <TableCell>{meal?.category?.name}</TableCell>
               <TableCell>
                 <img

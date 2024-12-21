@@ -22,7 +22,9 @@ function MealItem({meal,selectedOrder,setSelectedOrder,selected,setMealOrder,set
   console.log('meal is selected',selected)
   
   const mealOrderHandler = ()=>{
-    setShowRequestedDialog(true)
+    if (meal.child_meals.length > 1) {
+      setShowRequestedDialog(true)
+    }
     setSelectEffect('')
       axiosClient.post('orderMeals',{
         order_id:selectedOrder?.id,

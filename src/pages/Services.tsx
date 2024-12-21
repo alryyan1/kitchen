@@ -18,6 +18,7 @@ import { useBeforeUnload } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useServiceStore } from "./ServiceStore";
 import TdCell from "@/helpers/TdCell";
+import DepositDialog from "@/components/DepositDialog";
 
 function Services() {
   useEffect(() => {
@@ -39,6 +40,9 @@ function Services() {
     addService(data);
     
   };
+    const [childId, setChildId] = useState(null);
+    const [update, setUpdate] = useState(0);
+    const [showAddDepositDialog, setShowAddDepositDialog] = useState(false);
   return (
     <>
       <Grid container spacing={2}>
@@ -71,12 +75,14 @@ function Services() {
         <Grid item lg={8} xs={12}>
           <Box sx={{ p: 1 }}>
             <Typography variant="h6" textAlign={"center"}>
-              الاصناف
+              منتجات
             </Typography>
             <Table size="small" style={{ direction: "rtl" }}>
               <TableHead>
                 <TableRow>
                   <TableCell>اسم  </TableCell>
+                  <TableCell>الكميه المتوفره في المخزن  </TableCell>
+                  <TableCell>اضافه  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -84,11 +90,32 @@ function Services() {
                   return (
                     <TableRow key={service.id}>
                       <TdCell item={service} colName={'name'}  table={`services`}>{service.name}</TdCell>
+                      <TableCell>0</TableCell>
+                      <TableCell>
+                        
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => {
+                            // handleAddCost(service);
+                          }}
+                        >
+                           اضافه كميه
+                        </Button>
+                   
+                      </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            <DepositDialog
+        update
+        selectedChild={childId}
+        service={chsilsdName}
+        open={showAddDepositDialog}
+        handleClose={handleClose}
+      />
           </Box>
         </Grid>
       </Grid>

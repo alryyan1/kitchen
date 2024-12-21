@@ -27,20 +27,13 @@ const MealCategoryForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!categoryName || !categoryImage) {
-      alert(t("validation.complete_all_fields")); // Use translation for the alert
-      return;
-    }
+  
 
     const formData = new FormData();
     formData.append("categoryName", categoryName);
-    formData.append("categoryImage", categoryImage);
 
-    console.log(t("log.category_name"), categoryName);
-    console.log(t("log.image_uploaded"), categoryImage);
 
-    add(categoryName, previewImage);
+    add(categoryName);
 
     setCategoryName("");
     setCategoryImage(null);
@@ -93,23 +86,7 @@ const MealCategoryForm = () => {
             />
           </div>
 
-          {/* Image Upload */}
-          <div className="mb-4">
-            <label
-              htmlFor="categoryImage"
-              className="block text-sm font-medium text-gray-700 text-right"
-            >
-              {t("form.category_image")}
-            </label>
-            <input
-              type="file"
-              id="categoryImage"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 p-2"
-              required
-            />
-          </div>
+         
 
           {/* Image Preview */}
           {previewImage && (

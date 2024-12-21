@@ -3,6 +3,7 @@ import { Eye, Trash2 } from 'lucide-react'
 import React from 'react'
 import Incremenor from './Incremenor'
 import { Mealorder, Order } from '@/Types/types';
+import { ColorPicker, ColorPickerChangeEvent } from 'primereact/colorpicker';
 interface CartItemOptionsPorbs {
     setColor: (color: string) => void;
     setShow: (show: boolean) => void;
@@ -10,10 +11,11 @@ interface CartItemOptionsPorbs {
     item: Mealorder;
     show: boolean;
     updateQuantity: (item: Mealorder, quantity: number) => void;
-    selectedOrder:Order
+    selectedOrder:Order;
+    setSelectedOrder:()=>void
   
 }
-function CartItemOptions({setShow,onDelete,item,show,updateQuantity,selectedOrder}:CartItemOptionsPorbs) {
+function CartItemOptions({setSelectedOrder,setShow,onDelete,item,show,updateQuantity,selectedOrder}:CartItemOptionsPorbs) {
   return (
     <div className="flex items-center  ">
     {/* <ColorPicker value={item.color} onChange={(e:ColorPickerChangeEvent)=>{
@@ -30,7 +32,7 @@ function CartItemOptions({setShow,onDelete,item,show,updateQuantity,selectedOrde
       </IconButton>
 
  
-      {/* <Incremenor updateQuantity={updateQuantity} requested={item} /> */}
+      <Incremenor setSelectedOrder={setSelectedOrder} updateQuantity={updateQuantity} requested={item} />
 
     </div>
   )

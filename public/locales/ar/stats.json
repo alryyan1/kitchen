@@ -1,12 +1,12 @@
 {
     "search": "بحث",
-    "child_name": "اسم الصنف",
+    "child_name": "الاسم ",
     "meal_name": "اسم الوجبة",
-    "requested_quantity": "الكمية المطلوبة",
-    "available_quantity": "الكمية الجاهزة",
-    "deducted_quantity": "الكمية المسحوبة",
-    "net_quantity": "المتوفر في المخزون",
-    "remaining_quantity": "الكمية الباقية",
-    "add_quantity": "إضافة كمية"
+    "requested_quantity": "الكمية المسلمه",
+    "available_quantity": "الكمية المباعه ",
+    "deducted_quantity": "الكمية في البوتيك",
+    "net_quantity": "المتوفر في المخزن",
+    "remaining_quantity": "اجمالي المبيعات ",
+    "add_quantity": "+-"
   }
   

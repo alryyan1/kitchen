@@ -74,7 +74,7 @@ const {serviceList,addService,fetchData} = useServiceStore()
           <form onSubmit={handleSubmit(submitHandler)}>
             <Stack gap={2} sx={{mb:1}} direction={"row"}>
               <Autocomplete
-              fullWidth
+              sx={{minWidth:'300px'}}
               getOptionLabel={(op)=>op.name}
               options={serviceList}
               value={selectedService}

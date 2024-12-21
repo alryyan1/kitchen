@@ -27,6 +27,7 @@ th,span {
   overflow: auto !important;
 }
 main {
+  /* height: 90vh!important; */
   /* background-image: linear-gradient(180deg, #f48fb1, transparent); */
 }
 .p-colorpicker input{
@@ -189,7 +190,7 @@ body {
 }
 
 .dashborad-stats {
-  background: linear-gradient(45deg, #7bc7d4, transparent);
+  background: linear-gradient(45deg, #ca7bd4, transparent);
   border-radius: 40px;
 }
 .muirtl-16wn5uk-MuiTypography-root {

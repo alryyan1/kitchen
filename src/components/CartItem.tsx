@@ -86,11 +86,11 @@ function CartItem({
           }
         />
 
-        {isIpadPro ? <CartItemOptionsMobile item={item} onDelete={onDelete} setShow={setShow} show={show} setColor={setColor} updateQuantity={updateQuantity}/> : <CartItemOptions selectedOrder={selectedOrder} item={item} onDelete={onDelete} setShow={setShow} show={show} setColor={setColor} updateQuantity={updateQuantity}/>}
+        {isIpadPro ? <CartItemOptionsMobile item={item} onDelete={onDelete} setShow={setShow} show={show} setColor={setColor} updateQuantity={updateQuantity}/> : <CartItemOptions setSelectedOrder={setSelectedOrder} selectedOrder={selectedOrder} item={item} onDelete={onDelete} setShow={setShow} show={show} setColor={setColor} updateQuantity={updateQuantity}/>}
       </Box>
       {item.requested_child_meals.length > 0 && (
 
-        <RequestedServices item={item}  show={show} updateRequestedQuantity={updateRequestedQuantity}/>
+        <RequestedServices setSelectedOrder={setSelectedOrder} item={item}  show={show} updateRequestedQuantity={updateRequestedQuantity}/>
       )}
     </div>
     </Badge>

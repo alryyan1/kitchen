@@ -173,21 +173,21 @@ export default function DashboardLayoutBasic() {
       title: t("Order Quantities"), // Use translation key for "Order Quantities"
       icon: <Scale />,
     },
-    {
-      segment: "expenses",
-      title: t("Expenses"), // Use translation key for "Expenses"
-      icon: <AttachMoneyIcon />,
-    },
+    // {
+    //   segment: "expenses",
+    //   title: t("Expenses"), // Use translation key for "Expenses"
+    //   icon: <AttachMoneyIcon />,
+    // },
     {
       segment: "menu",
       title: t("Menu"), // Use translation key for "Menu"
       icon: <RestaurantMenuIcon />,
     },
-    {
-      segment: "reservations2",
-      title: t("Reservations"), // Use translation key for "Reservations"
-      icon: <BookmarkAddedIcon />,
-    },
+    // {
+    //   segment: "reservations2",
+    //   title: t("Reservations"), // Use translation key for "Reservations"
+    //   icon: <BookmarkAddedIcon />,
+    // },
     {
       kind: "divider",
     },
@@ -269,8 +269,8 @@ export default function DashboardLayoutBasic() {
       router={router}
       theme={demoTheme}
       branding={{
-        title: "Del Pasta ",
-        logo: <img src={del} />,
+        title: "Mariam Store ",
+        // logo: <img src={del} />,
       }}
     >
       <React.Suspense
@@ -278,7 +278,7 @@ export default function DashboardLayoutBasic() {
           <Box
             sx={{
               userSelect:'none',
-              // height: "100vh",
+              height: "100vh",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -301,7 +301,7 @@ export default function DashboardLayoutBasic() {
               >
                 <PageContainer
                   className="root-container"
-                  sx={{ margin: 0, p: 1 }}
+                  sx={{ margin: 0, p: 1,height:'100vh' }}
                 >
                   <Outlet
                     context={{

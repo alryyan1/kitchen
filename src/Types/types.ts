@@ -38,6 +38,7 @@ export interface Customer {
   address: string;
   area: string;
   state:string;
+  is_store:boolean;
 }
 export interface Order {
   id: number;
