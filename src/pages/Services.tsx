@@ -26,9 +26,10 @@ function Services() {
   }, []);
 
   const {serviceList,addService,fetchData} = useServiceStore()
+  const [update, setUpdate] = useState(0);
   useEffect(() => {
     fetchData()
-  }, []);
+  }, [update]);
 
   const {
     handleSubmit,
@@ -40,8 +41,7 @@ function Services() {
     addService(data);
     
   };
-    const [childId, setChildId] = useState(null);
-    const [update, setUpdate] = useState(0);
+    const [selectedService, setSelectedService] = useState<Service|null>(null);
     const [showAddDepositDialog, setShowAddDepositDialog] = useState(false);
     const handleClose = () => {
       setShowAddDepositDialog(false);
@@ -86,6 +86,7 @@ function Services() {
               <TableHead>
                 <TableRow>
                   <TableCell>اسم  </TableCell>
+                  <TableCell>سعر المنتج  </TableCell>
                   <TableCell>الكميه المتوفره في المخزن  </TableCell>
                   <TableCell>اضافه  </TableCell>
                 </TableRow>
@@ -95,7 +96,9 @@ function Services() {
                   return (
                     <TableRow key={service.id}>
                       <TdCell item={service} colName={'name'}  table={`services`}>{service.name}</TdCell>
-                      <TableCell>0</TableCell>
+                      <TdCell sx={{width:'50px'}} item={service} colName={'price'}  table={`services`}>{service.price}</TdCell>
+                      <TableCell>{service.inventory}</TableCell>
+                      
                       <TableCell>
                         
                         <Button
@@ -104,9 +107,7 @@ function Services() {
                           onClick={() => {
                             // handleAddCost(service);
                             setShowAddDepositDialog(true);
-                        setChildId(service.id);
-                        setChildName(info.childName);
-                        setMealName(info.mealName);
+                            setSelectedService(service);
                           }}
                         >
                            اضافه كميه
@@ -118,13 +119,12 @@ function Services() {
                 })}
               </TableBody>
             </Table>
-            <DepositDialog
+            {selectedService && <DepositDialog
         update
-        selectedChild={childId}
-        service={''}
+        service={selectedService}
         open={showAddDepositDialog}
         handleClose={handleClose}
-      />
+      />}
           </Box>
         </Grid>
       </Grid>

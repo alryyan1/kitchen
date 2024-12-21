@@ -108,7 +108,7 @@ function Cart({ selectedOrder, setSelectedOrder, printHandler }: CartProps) {
           <Autocomplete onChange={(e,val)=>{
             setSelectedMeal(val)
           }} fullWidth getOptionLabel={(op)=>op.name} renderInput={(params)=>{
-          return <TextField label='الوجبات' {...params}/>
+          return <TextField label='المنتجات' {...params}/>
         }}  options={meals}/>
         <Button disabled={selectedOrder?.order_confirmed} onClick={()=>{
           mealOrderHandler()

@@ -20,6 +20,11 @@ export interface Category {
 export interface Service {
   id: number;
   name: string;
+  inventory:number;
+  price:number;
+  sold:number;
+  deposits:any[];
+  deducts:any[];
 }
 export type AxiosResponseProps<T>  ={
   data : T;

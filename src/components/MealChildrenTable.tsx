@@ -73,16 +73,9 @@ function MealChildrenTable({
                 {/* <TdCell item={meal} colName={"quantity"} table={"childMeals"}>
                   {meal.quantity}
                 </TdCell> */}
-                <TdCell
-                 update={setSelectedMeal}
-                  show
-                  sx={{ width: "60px", textAlign: "center",direction:'ltr' }}
-                  item={meal}
-                  colName={"price"}
-                  table={"childMeals"}
-                >
-                  {meal.price}
-                </TdCell>
+                <TableCell>
+                  {meal.service.price}
+                </TableCell>
                 {/* <TdCell item={meal} colName={'people_count'}  table={'childMeals'}>{meal.people_count}</TdCell> */}
                 {/* <TdCell item={meal} colName={'weight'}  table={'childMeals'}>{meal.weight}</TdCell> */}
                 <TableCell>

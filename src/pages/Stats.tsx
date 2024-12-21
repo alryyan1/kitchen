@@ -19,6 +19,10 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCustomerStore } from "./Customer/useCustomer";
 import { Customer } from "@/Types/types";
+import DeductDialogStats from "@/components/DeductDialogStats";
+import StatsTdCell from "./StatsTdCell";
+import StatsTdCellAvailableInStore from "./StatsTdCellAvailableInStore";
+import StatsTdCellSales from "./StatsTdCellSales";
 
 function Stats() {
   const { t } = useTranslation('stats'); // Using the i18n hook for translations
@@ -34,7 +38,7 @@ function Stats() {
   const {fetchData ,customers} = useCustomerStore()
     useEffect(() => {
       fetchData();
-    }, []);
+    }, [update]);
   const handleClose = () => {
     setShowAddDepositDialog(false);
     setUpdate((u) => u + 1);
@@ -59,12 +63,12 @@ function Stats() {
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer>
         <Stack sx={{ mt: 1, mb: 1 }} direction="row" spacing={2}>
-          <input
+          {/* <input
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
             type="date"
-          />
+          /> */}
           <TextField
             label={t("search")} // Translated label for 'Search'
             onChange={(e) => {
@@ -112,12 +116,14 @@ function Stats() {
                   {/* <TableCell sx={{fontSize:'24px'}}>{info.mealName}</TableCell> */}
                   <TableCell sx={{fontSize:'24px'}}>{info.childName}</TableCell>
                   <TableCell sx={{fontSize:'24px'}}>{info.totalQuantity}</TableCell>
-                  <TableCell sx={{fontSize:'24px'}}>{info.totalDeposit}</TableCell>
-                  <TableCell sx={{fontSize:'24px'}}>{info.totalDeduct}</TableCell>
-                  <TableCell sx={{fontSize:'24px'}}>{info.totalDeposit - info.totalDeduct}</TableCell>
-                  <TableCell sx={{fontSize:'24px'}}>{remaining > 0 ? `+${remaining}` : remaining }</TableCell>
+                  <StatsTdCell customer={selectedCustomer} update={update} sx={{fontSize:'24px'}} service_id={info.serviceId}></StatsTdCell>
+                  <StatsTdCellAvailableInStore  update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} total={info.totalQuantity}></StatsTdCellAvailableInStore>
+                  <TableCell sx={{fontSize:'24px'}}>{info.totalDeposit - info.totalQuantity}</TableCell>
+                  <StatsTdCellSales  update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} price={info.totalQuantity}></StatsTdCellSales>
+
                   <TableCell sx={{fontSize:'24px'}}>
                     <Button
+                     disabled={selectedCustomer == null}
                       variant="contained"
                       size="small"
                       className="hover:bg-slate-600 hover:text-white"
@@ -137,14 +143,14 @@ function Stats() {
           </TableBody>
         </Table>
       </TableContainer>
-      <DepositDialog
+     {selectedCustomer && <DeductDialogStats
         update
-        selectedChild={childId}
-        childName={childName}
-        mealName={mealName}
+        name={childName}
+        customer={selectedCustomer}
+        service_id={childId}
         open={showAddDepositDialog}
         handleClose={handleClose}
-      />
+      />}
     </Paper>
   );
 }
