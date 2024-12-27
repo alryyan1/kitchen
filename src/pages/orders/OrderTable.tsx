@@ -92,7 +92,7 @@ export const OrderTable = ({ orders, setOrders }: OrderTableProps) => {
                 <TableCell width={"5%"}>{t('remaining')}</TableCell>
                 <TableCell>{t("orderTable.orderDate")}</TableCell>
                 <TableCell>{t("orderTable.deliveryDate")}</TableCell>
-                <TableCell>{t("handed")}</TableCell>
+                {/* <TableCell>{t("handed")}</TableCell> */}
                 <TableCell>{t("settings")}</TableCell>
                 {/* <TableCell>{t("orderTable.deliveryLocation")}</TableCell> */}
                 {/* <TableCell>{t("orderTable.notes")}</TableCell> */}
@@ -152,7 +152,7 @@ export const OrderTable = ({ orders, setOrders }: OrderTableProps) => {
                       label={t("orderTable.deliveryDate")}
                     />
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <LoadingButton
                       loading={loading}
                       onClick={() => {
@@ -164,7 +164,7 @@ export const OrderTable = ({ orders, setOrders }: OrderTableProps) => {
                     >
                       {order.status == "delivered" ? "الغاء " : "تسليم"}
                     </LoadingButton>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Tooltip title="اعدادات الطلب" content="اعدادات الطلب">
                       <IconButton

@@ -237,7 +237,7 @@ function Orders() {
             ).toFixed(3)}
           </Typography>
         </Stack>
-        <Stack
+        {/* <Stack
           direction="column"
           alignItems="center"
           justifyContent="center"
@@ -249,8 +249,8 @@ function Orders() {
               orders.filter((o)=>o.status =='delivered').length
             )}
           </Typography>
-        </Stack>
-        <Stack
+        </Stack> */}
+        {/* <Stack
           direction="column"
           alignItems="center"
           justifyContent="center"
@@ -262,7 +262,7 @@ function Orders() {
               orders.filter((o)=>o.status !='delivered').length
             )}
           </Typography>
-        </Stack>
+        </Stack> */}
       </Stack>
       <OrderTable setOrders={setOrders} orders={orders} />
       {links.length > 0 && (

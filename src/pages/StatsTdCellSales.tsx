@@ -4,7 +4,7 @@ import { Service } from '@/Types/types'
 import { CircularProgress, TableCell } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
-function StatsTdCellSales({service_id,sx,price,update}) {
+function StatsTdCellSales({service_id,sx,price,update,customer}) {
     const [service,setService] = useState<Service|null>()
     const [loading,setLoading] = useState(false)
     useEffect(() => {
@@ -16,7 +16,13 @@ function StatsTdCellSales({service_id,sx,price,update}) {
     },[update])
   return (
     <TableCell sx={sx}>
-        {loading ? <CircularProgress/> : (service?.price *  service?.sold)}
+        {loading ? <CircularProgress/> : (service?.price * service?.deducts.filter((d)=>{
+  if (customer) {
+      return d.customer_id == customer.id
+  }else{
+      return true
+  }
+}).reduce((prev,curr)=> prev + curr.quantity,0) )}
     </TableCell>
   )
 }

@@ -117,9 +117,9 @@ function Stats() {
                   <TableCell sx={{fontSize:'24px'}}>{info.childName}</TableCell>
                   <TableCell sx={{fontSize:'24px'}}>{info.totalQuantity}</TableCell>
                   <StatsTdCell customer={selectedCustomer} update={update} sx={{fontSize:'24px'}} service_id={info.serviceId}></StatsTdCell>
-                  <StatsTdCellAvailableInStore  update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} total={info.totalQuantity}></StatsTdCellAvailableInStore>
+                  <StatsTdCellAvailableInStore customer={selectedCustomer}  update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} total={info.totalQuantity}></StatsTdCellAvailableInStore>
                   <TableCell sx={{fontSize:'24px'}}>{info.totalDeposit - info.totalQuantity}</TableCell>
-                  <StatsTdCellSales  update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} price={info.totalQuantity}></StatsTdCellSales>
+                  <StatsTdCellSales  customer={selectedCustomer} update={update} sx={{fontSize:'24px'}} service_id={info.serviceId} price={info.totalQuantity}></StatsTdCellSales>
 
                   <TableCell sx={{fontSize:'24px'}}>
                     <Button
