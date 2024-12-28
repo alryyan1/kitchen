@@ -21,11 +21,10 @@ export  const useCategoryStore = create<CategoryStoreProps>((set) => {
           });
         });
       },
-      add: (name,image) => {
+      add: (name) => {
         axiosClient
         .post("categories", {
           name: name,
-          image: image,
         })
         .then(({ data }) => {
           set((state) => ({

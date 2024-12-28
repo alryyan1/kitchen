@@ -12,11 +12,11 @@ interface OrderListProps {
 function OrderList({orders,selectedOrder,setSelectedOrder}:OrderListProps) {
   return (
     <Stack direction={'column'} gap={1} sx={{p:1}} style={{ border: "1px dashed lightpink" }}>
-          <Typography textAlign={'center'}>Orders</Typography>
+          <Typography textAlign={'center'}>الطلبات</Typography>
           {orders.map((order) => {
             // console.log(order);
             return (
-              <Badge key={order.id} color='secondary'  variant="standard" badgeContent={order?.meal_orders.length}>
+              <Badge key={order.id} color='info'  variant="standard" badgeContent={order?.meal_orders.length}>
                     <LoadingButton style={order.order_confirmed && selectedOrder?.id != order.id ? {backgroundColor:'green'}:null} sx={{backgroundColor:(theme)=>{
                 return selectedOrder?.id == order.id ? theme.palette.warning.light :''
               }}} onClick={()=>{

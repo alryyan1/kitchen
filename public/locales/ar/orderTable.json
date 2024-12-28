@@ -13,6 +13,10 @@
     },
     "remaining":"متبقي",
     "settings":"الاعدادات",
-    "handed":"تسليم"
+    "discount":"التخفيض" ,
+    "complete":"انتهاء",
+    "handed":"تسليم",
+    "changeState":"تغيير الحاله",
+    "cancel":"الغاء"
   }
   

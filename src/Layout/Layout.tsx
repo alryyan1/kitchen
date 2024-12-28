@@ -11,7 +11,7 @@ import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
 import { PageContainer } from "@toolpad/core/PageContainer";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 import { router } from "@/router";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { AuthProvider, useAuthContext } from "@/contexts/stateContext";
@@ -42,12 +42,15 @@ import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./../i18n";
 import ArriavalDialog from "@/components/ArriavalDialog";
 import alarm from "./../assets/alarm.wav";
+import { Meal } from "@/Types/types";
+import LoginDialog from "@/components/LoginDialog";
+import { useAuthStore } from "@/AuthStore";
 
 const demoTheme = createTheme({
   // direction: "rtl",
   palette: {
     primary: {
-      // main: "#9c27b0", purple
+      // main: "#9c27b0",// purple
       main: "#1976d2",
     },
   },
@@ -91,17 +94,51 @@ const demoTheme = createTheme({
   colorSchemes: { light: true, dark: true },
 });
 
-interface DemoProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window?: () => Window;
-}
 
-export default function DashboardLayoutBasic(props: DemoProps) {
-  const { window } = props;
+export default function DashboardLayoutBasic() {
+  const [isIpadPro, setIsIpadPro] = React.useState(false);
+  const {openLoginDialog,setCloseLoginDialog,setOpenLoginDialog} =  useAuthStore((state)=>state)
+  console.log(openLoginDialog,'openDialog')
+  const navigate =  useNavigate()
+   const {setUser,setToken,} = useAuthContext()
+    const [meals,setMeals] = React.useState<Meal[]>([]);
+   React.useEffect(()=>{
+      axiosClient.get('meals').then(({data})=>{
+        setMeals(data)
+      })
+    },[])
 
+   
+  React.useEffect(() => {
+    axiosClient.get("/user").then(({ data }) => {
+      setUser(data);
+    }).catch((err)=>{
+    console.log('error')
+    setUser(null);
+    setToken(null)
+    navigate('/login');
+    localStorage.removeItem('ACCESS_TOKEN')
+
+  });
+  }, [])
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      '(min-width: 768px) and (max-width: 1366px)'
+    );
+
+    const handleResize = (e) => setIsIpadPro(e.matches);
+    if (mediaQuery.matches) {
+      console.log('The screen width is between 768px and 1366px');
+    } else {
+      console.log('The screen width is outside the range');
+    }
+    
+
+    handleResize(mediaQuery); // Initial check
+    mediaQuery.addEventListener('change', handleResize);
+
+    return () => mediaQuery.removeEventListener('change', handleResize);
+  }, []);
   React.useEffect(() => {
     //get lang from localstorage
     const lang = localStorage.getItem("lang");
@@ -137,21 +174,21 @@ export default function DashboardLayoutBasic(props: DemoProps) {
       title: t("Order Quantities"), // Use translation key for "Order Quantities"
       icon: <Scale />,
     },
-    {
-      segment: "expenses",
-      title: t("Expenses"), // Use translation key for "Expenses"
-      icon: <AttachMoneyIcon />,
-    },
+    // {
+    //   segment: "expenses",
+    //   title: t("Expenses"), // Use translation key for "Expenses"
+    //   icon: <AttachMoneyIcon />,
+    // },
     {
       segment: "menu",
       title: t("Menu"), // Use translation key for "Menu"
       icon: <RestaurantMenuIcon />,
     },
-    {
-      segment: "reservations2",
-      title: t("Reservations"), // Use translation key for "Reservations"
-      icon: <BookmarkAddedIcon />,
-    },
+    // {
+    //   segment: "reservations2",
+    //   title: t("Reservations"), // Use translation key for "Reservations"
+    //   icon: <BookmarkAddedIcon />,
+    // },
     {
       kind: "divider",
     },
@@ -200,7 +237,6 @@ export default function DashboardLayoutBasic(props: DemoProps) {
   const [orders, setOrders] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [selectedOrder, setSelectedOrder] = React.useState(null);
-  const demoWindow = window !== undefined ? window() : undefined;
   const [audio] = React.useState(new Audio(alarm));
 
   const playAlarm = () => {
@@ -234,15 +270,15 @@ export default function DashboardLayoutBasic(props: DemoProps) {
       router={router}
       theme={demoTheme}
       branding={{
-        title: "Laundry App",
-        logo: <img src={logo} />,
+        title: "Laundry App ",
+        // logo: <img src={del} />,
       }}
-      window={demoWindow}
     >
       <React.Suspense
         fallback={
           <Box
             sx={{
+              userSelect:'none',
               height: "100vh",
               display: "flex",
               justifyContent: "center",
@@ -266,12 +302,13 @@ export default function DashboardLayoutBasic(props: DemoProps) {
               >
                 <PageContainer
                   className="root-container"
-                  sx={{ margin: 0, p: 1 }}
+                  sx={{ margin: 0, p: 1,height:'100vh' }}
                 >
                   <Outlet
                     context={{
                       selectedOrder,
                       setSelectedOrder,
+                      isIpadPro, setIsIpadPro,meals
                     }}
                   />
                 </PageContainer>{" "}
@@ -288,6 +325,12 @@ export default function DashboardLayoutBasic(props: DemoProps) {
         open={open}
         orders={orders}
       />
+      <React.Suspense>
+      <LoginDialog open={openLoginDialog} handleClose={()=>{
+        setCloseLoginDialog()
+      }}/>
+      </React.Suspense>
+    
     </AppProvider>
     // preview-end
   );

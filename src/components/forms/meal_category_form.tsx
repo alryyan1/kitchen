@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCategoryStore } from "@/stores/CategoryStore";
+import { Stack } from "@mui/system";
+import { IconButton, Tooltip } from "@mui/material";
+import { Settings } from "lucide-react";
+import ImageGallery from "@/pages/gallary";
+import CategoryGallary from "@/pages/CategoryGallary";
+import { webUrl } from "@/helpers/constants";
 
 const MealCategoryForm = () => {
   const { t } = useTranslation('addCategory'); // Hook for translation
@@ -8,32 +14,26 @@ const MealCategoryForm = () => {
   const [categoryImage, setCategoryImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const { fetchCategories, categories, add } = useCategoryStore((state) => state);
+  const [showGallary, setShowGallary] = useState(false);
 
   // Fetch categories on component mount
   useEffect(() => {
     fetchCategories();
   }, []);
-
+    const [selectedCategory,setSelectedCategory] = useState(null)
   console.log(previewImage, "Preview Image", "Name", categoryName);
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!categoryName || !categoryImage) {
-      alert(t("validation.complete_all_fields")); // Use translation for the alert
-      return;
-    }
+  
 
     const formData = new FormData();
     formData.append("categoryName", categoryName);
-    formData.append("categoryImage", categoryImage);
 
-    console.log(t("log.category_name"), categoryName);
-    console.log(t("log.image_uploaded"), categoryImage);
 
-    add(categoryName, previewImage);
+    add(categoryName);
 
     setCategoryName("");
     setCategoryImage(null);
@@ -55,7 +55,9 @@ const MealCategoryForm = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+<>
+   {showGallary ? <CategoryGallary fetchCategories={fetchCategories} setShowImageGallary={setShowGallary} selectedCategory={selectedCategory}/> :  <div className="grid grid-cols-2 gap-4">
+      
       {/* Form Section */}
       <div
         dir="rtl"
@@ -84,23 +86,7 @@ const MealCategoryForm = () => {
             />
           </div>
 
-          {/* Image Upload */}
-          <div className="mb-4">
-            <label
-              htmlFor="categoryImage"
-              className="block text-sm font-medium text-gray-700 text-right"
-            >
-              {t("form.category_image")}
-            </label>
-            <input
-              type="file"
-              id="categoryImage"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 p-2"
-              required
-            />
-          </div>
+         
 
           {/* Image Preview */}
           {previewImage && (
@@ -133,21 +119,30 @@ const MealCategoryForm = () => {
             <div key={cat.name}>
               <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
                 <img
-                  src={cat.image}
+                  src={`${webUrl}/images/${cat.image_url}`}
                   alt={cat.name}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
-                  <h3 className="text-lg flex items-center justify-center font-semibold text-gray-900">
+                 <Stack direction={'row'} justifyContent={'space-between'}>
+                 <h3 className="text-lg flex items-center justify-center font-semibold text-gray-900">
                     {cat.name}
                   </h3>
+                  <Tooltip title='choose from gallary'><IconButton onClick={()=>{
+                  setSelectedCategory(cat)
+                  setShowGallary(true)
+                }}><Settings/></IconButton></Tooltip>
+                 </Stack>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </div>}
+</>
+
+ 
   );
 };
 

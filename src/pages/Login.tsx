@@ -14,9 +14,11 @@ import { Label } from "../components/ui/label";
 import { useAuthContext } from "@/contexts/stateContext";
 import axiosClient from "@/helpers/axios-client";
 import { Button } from "@/components/ui/button";
-import loginBack from "./../assets/images/laundry-1.jpg";
+import loginBack from "./../assets/images/mariam-bg.jpg";
+import { useAuthStore } from "@/AuthStore";
 
 function App() {
+  const {setCloseLoginDialog,startSession} = useAuthStore((state)=>state)
   const { t } = useTranslation('login'); // Importing translation function
   const [error, setError] = useState({ val: false, msg: "" });
   const [loading, setLoading] = useState(false);
@@ -39,8 +41,12 @@ function App() {
       })
       .then(({ data }) => {
         if (data.status) {
+          setCloseLoginDialog()
           setUser(data.user);
           authenticate(data.token);
+          startSession(data.token,data.user)
+
+          
           localStorage.setItem("user_type", data.user.user_type);
         }
       })
@@ -62,11 +68,11 @@ function App() {
         backgroundPosition: "center",
       }}
     >
-      <Stack justifyContent="center" alignItems="center" direction="column">
-        <Card className="rtl text-right shadow-md rounded-lg bg-white p-6 text-gray-800">
+      <Stack justifyContent="center" className="  rounded-md bg-white" alignItems="center" sx={{borderRadius:'10px'}} direction="column">
+        <Card style={{borderRadius:'10px'}} className="rtl text-right rounded-md shadow-md  p-6 text-gray-800">
           <CardHeader>
             <CardTitle className="text-center text-2xl font-bold">
-              {t("login.title")}
+              Mariam Store
             </CardTitle>
           </CardHeader>
           <CardContent>

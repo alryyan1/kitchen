@@ -14,11 +14,17 @@ export interface Category {
   id: number;
   name: string;
   image:string;
+  image_url:string;
   meals:Meal[];
 }
 export interface Service {
   id: number;
   name: string;
+  inventory:number;
+  price:number;
+  sold:number;
+  deposits:any[];
+  deducts:any[];
 }
 export type AxiosResponseProps<T>  ={
   data : T;
@@ -37,6 +43,7 @@ export interface Customer {
   address: string;
   area: string;
   state:string;
+  is_store:boolean;
 }
 export interface Order {
   id: number;
@@ -69,7 +76,9 @@ export interface Order {
   deducts:Deduct[]
   outside:number;
   car_palette:string
-  outside_confirmed:boolean
+  outside_confirmed:boolean;
+  draft:string;
+  complete:boolean;
 }
 
 export interface Deduct {
@@ -83,17 +92,6 @@ export interface Deduct {
 
 
 
-
-
-export interface ChildMeal {
-  id: number;
-  name: string;
-  meal:Meal;
-  quantity:number;
-  people_count: string;
-  price:number;
-  weight:string;
-}
 export interface CostCategory {
   id: number;
   name: string;
@@ -122,7 +120,7 @@ export interface Requestedchildmeal {
   child_meal_id: number;
   quantity: number;
   price: number;
-  child_meal: Childmeal;
+  child_meal: ChildMeal;
   count: number;
   available:number
 }
@@ -143,18 +141,23 @@ export interface Meal {
   created_at: null;
   updated_at: null;
   people_count: string;
-  child_meals: Childmeal[];
+  child_meals: ChildMeal[];
   image_url:string;
 }
 
-export interface Childmeal {
+
+
+
+export interface ChildMeal {
   id: number;
+  meal:Meal;
+  service:Service
+  quantity:number;
+  people_count: string;
+  price:number;
+  weight:string;
   meal_id: number;
-  quantity: number;
   name: string;
   created_at: string;
   updated_at: string;
-  price: number;
-  people_count: string;
-  weight: string;
 }

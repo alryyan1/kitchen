@@ -22,7 +22,9 @@ function MealItem({meal,selectedOrder,setSelectedOrder,selected,setMealOrder,set
   console.log('meal is selected',selected)
   
   const mealOrderHandler = ()=>{
-    setShowRequestedDialog(true)
+    if (meal.child_meals.length > 1) {
+      setShowRequestedDialog(true)
+    }
     setSelectEffect('')
       axiosClient.post('orderMeals',{
         order_id:selectedOrder?.id,
@@ -58,12 +60,13 @@ function MealItem({meal,selectedOrder,setSelectedOrder,selected,setMealOrder,set
         backdropFilter: 'blur(10px)',
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        border: selected ? '2px dashed #cf060559' : 'none'
+        border: selected ? '2px dashed #cf060559' : 'none',
+        width:'200px'
       }}
     >
       {/* <div className=" "> */}
-            <img src={`${webUrl}/images/${meal?.image_url}`} alt={meal.name} className="w-20 h-20 object-cover" />
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            <img src={ meal?.image_url === null ? ph : `${webUrl}/images/${meal?.image_url}`} alt={meal.name} className="w-20 h-20 object-cover" />
+        <h3  className="text-lg font-semibold text-gray-800 mb-2">
           {meal.name}
         </h3>
       {/* </div> */}

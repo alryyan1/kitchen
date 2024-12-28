@@ -15,6 +15,7 @@
     "report": "Report",
     "filter": "Filter",
     "handed":"Delivered",
-    "notHanded":"Not Delivered"
+    "notHanded":"Not Delivered",
+    "discount":"Discount"
   }
   

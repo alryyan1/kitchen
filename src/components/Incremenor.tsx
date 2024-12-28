@@ -1,3 +1,4 @@
+import axiosClient from '@/helpers/axios-client';
 import { Mealorder, Requestedchildmeal } from '@/Types/types';
 import { Stack } from '@mui/system'
 import { Minus, Plus } from 'lucide-react'
@@ -10,21 +11,21 @@ interface IncremenorProbs {
 function Incremenor({updateQuantity,requested}:IncremenorProbs) {
   return (
     <Stack direction={"row"} justifyContent={'center'}>
-     <button
+     {/* <button
       onClick={() => updateQuantity(true, requested)}
       className="p-1 text-center bg-gray-100 rounded"
     >
       <Plus size={16} />
-    </button>
+    </button> */}
     <span className=" text-center p-1">
-      {requested.quantity}
+
     </span>
-   <button
+   {/* <button
       onClick={() => updateQuantity(false, requested)}
       className="p-1 text-center bg-gray-100 rounded"
     >
       <Minus size={16} />
-    </button>
+    </button> */}
   </Stack>
   )
 }

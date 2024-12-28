@@ -13,6 +13,10 @@
     },
     "remaining":"remaining",
     "settings":"settings",
-    "handed":"handed"
+    "discount":"discount",
+    "complete":"complete",
+    "changeState":"Change State" ,
+    "handed":"Delivery",
+    "cancel":"Cancel"
   }
   

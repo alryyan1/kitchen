@@ -17,6 +17,8 @@ import { Cost, Service } from "@/Types/types";
 import { useBeforeUnload } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useServiceStore } from "./ServiceStore";
+import TdCell from "@/helpers/TdCell";
+import DepositDialog from "@/components/DepositDialog";
 
 function Services() {
   useEffect(() => {
@@ -24,9 +26,10 @@ function Services() {
   }, []);
 
   const {serviceList,addService,fetchData} = useServiceStore()
+  const [update, setUpdate] = useState(0);
   useEffect(() => {
     fetchData()
-  }, []);
+  }, [update]);
 
   const {
     handleSubmit,
@@ -38,6 +41,13 @@ function Services() {
     addService(data);
     
   };
+    const [selectedService, setSelectedService] = useState<Service|null>(null);
+    const [showAddDepositDialog, setShowAddDepositDialog] = useState(false);
+    const handleClose = () => {
+      setShowAddDepositDialog(false);
+      setUpdate((u) => u + 1);
+    };
+  
   return (
     <>
       <Grid container spacing={2}>
@@ -54,7 +64,7 @@ function Services() {
                 },
               })}
               fullWidth
-              label=" اسم الخدمه"
+              label=" اسم الصنف"
               variant="outlined"
               name="name"
               error={errors.name != null}
@@ -75,19 +85,46 @@ function Services() {
             <Table size="small" style={{ direction: "rtl" }}>
               <TableHead>
                 <TableRow>
-                  <TableCell>اسم الخدمه </TableCell>
+                  <TableCell>اسم  </TableCell>
+                  {/* <TableCell>سعر المنتج  </TableCell> */}
+                  {/* <TableCell>الكميه المتوفره في المخزن  </TableCell> */}
+                  {/* <TableCell>اضافه  </TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {serviceList.map((service: Service) => {
                   return (
                     <TableRow key={service.id}>
-                      <TableCell>{service.name}</TableCell>
+                      <TdCell item={service} colName={'name'}  table={`services`}>{service.name}</TdCell>
+                      {/* <TdCell sx={{width:'50px'}} item={service} colName={'price'}  table={`services`}>{service.price}</TdCell> */}
+                      {/* <TableCell>{service.inventory}</TableCell> */}
+                      
+                      {/* <TableCell>
+                        
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => {
+                            // handleAddCost(service);
+                            setShowAddDepositDialog(true);
+                            setSelectedService(service);
+                          }}
+                        >
+                           اضافه كميه
+                        </Button>
+                   
+                      </TableCell> */}
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            {selectedService && <DepositDialog
+        update
+        service={selectedService}
+        open={showAddDepositDialog}
+        handleClose={handleClose}
+      />}
           </Box>
         </Grid>
       </Grid>

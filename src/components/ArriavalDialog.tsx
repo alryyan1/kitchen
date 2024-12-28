@@ -39,7 +39,7 @@ const ArriavalDialog = ({ handleClose, open, orders ,setOrders,setSelectedOrder,
               return (
                 <Card key={d.id}>
                       <ListItem sx={{mb:1}}>
-                  <ListItemText  primary={`${d?.customer?.name} Car No 🚗 ${d.car_palette}`}  />
+                  <ListItemText  primary={`${d?.customer?.name} Car No 🚗 ${d.car_palette} for Order Id ${d.id}`}  />
                   <Button
                     onClick={() => {
                         axiosClient.patch(`orders/${d.id}`,{

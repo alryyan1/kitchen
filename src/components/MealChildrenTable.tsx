@@ -1,6 +1,6 @@
 import axiosClient from "@/helpers/axios-client";
 import TdCell from "@/helpers/TdCell";
-import { ChildMeal, Meal, Mealorder } from "@/Types/types";
+import { ChildMeal, Meal } from "@/Types/types";
 import {
   TableBody,
   TableCell,
@@ -10,12 +10,10 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { Download, Edit, Trash2 } from "lucide-react";
-import { ColorPicker } from "primereact/colorpicker";
+import { Download, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import React from "react";
-import BasicPopover from "./Mypopover";
-import RequestedChildrenTable from "./RequestedChildrenTable";
-import RequestedServices from "./RequestedServices";
+
 interface MealTableDataProps {
   data: ChildMeal[];
   setSelectedMeal: (d) => void;
@@ -27,6 +25,8 @@ function MealChildrenTable({
   setSelectedMeal,
   selectedMeal,
 }: MealTableDataProps) {
+  const { t } = useTranslation('mealChildrenTable');
+
   const onDelete = (meal: ChildMeal) => {
     axiosClient.delete(`childMeals/${meal.id}`).then(({ data }) => {
       setSelectedMeal(data.data);
@@ -35,15 +35,13 @@ function MealChildrenTable({
 
   return (
     <>
-      <Tooltip title="اضافه الخدمات">
+      <Tooltip title={t("add_services")}>
         <IconButton
           onClick={() => {
             axiosClient
               .post(`defineServices/${selectedMeal.id}`)
               .then(({ data }) => {
-                console.log(data.data, "data");
                 setSelectedMeal(data.data);
-                
               });
           }}
         >
@@ -51,62 +49,53 @@ function MealChildrenTable({
         </IconButton>
       </Tooltip>
 
-      <Table style={{direction:'ltr'}} size="small">
+      <Table style={{ direction: "ltr" }} size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            {/* <TableCell>العدد</TableCell> */}
-            <TableCell>Price</TableCell>
-            {/* <TableCell>الاشخاص</TableCell> */}
-            {/* <TableCell>الوزن</TableCell> */}
+            <TableCell>{t("name")}</TableCell>
+            <TableCell>{t("price")}</TableCell>
             <TableCell>-</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((meal, index) => {
-            console.log(meal, "meal");
-            return (
-              <TableRow key={meal.id}>
-                <TdCell item={meal} colName={"name"} table={"childMeals"}>
-                  {meal.name}
-                </TdCell>
-                {/* <TdCell item={meal} colName={"quantity"} table={"childMeals"}>
-                  {meal.quantity}
-                </TdCell> */}
-                <TdCell
-                 update={setSelectedMeal}
-                  show
-                  sx={{ width: "60px", textAlign: "center" }}
-                  item={meal}
-                  colName={"price"}
-                  table={"childMeals"}
+          {data.map((meal) => (
+            <TableRow key={meal.id}>
+              <TdCell item={meal} colName="name" table="childMeals">
+                {meal.service.name}
+              </TdCell>
+              <TdCell
+                sx={{ width: "50px" }}
+                item={meal}
+                colName="price"
+                isNum
+                table="childMeals"
+              >
+                {meal.price}
+              </TdCell>
+              <TableCell>
+                <IconButton
+                  color="error"
+                  onClick={() => onDelete(meal)}
+                  size="small"
                 >
-                  {meal.price}
-                </TdCell>
-                {/* <TdCell item={meal} colName={'people_count'}  table={'childMeals'}>{meal.people_count}</TdCell> */}
-                {/* <TdCell item={meal} colName={'weight'}  table={'childMeals'}>{meal.weight}</TdCell> */}
-                <TableCell>
-                  <IconButton
-                    color="error"
-                    onClick={() => onDelete(meal)}
-                    size="small"
-                  >
-                    <Trash2 size={18} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                  <Trash2 size={18} />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>
   );
 }
+
 export function MealChildrenTableMobile({
   data,
   setSelectedMeal,
   selectedMeal,
 }: MealTableDataProps) {
+  const { t } = useTranslation();
+
   const onDelete = (meal: ChildMeal) => {
     axiosClient.delete(`childMeals/${meal.id}`).then(({ data }) => {
       setSelectedMeal(data.data);
@@ -115,15 +104,13 @@ export function MealChildrenTableMobile({
 
   return (
     <>
-      <Tooltip title="اضافه الخدمات">
+      <Tooltip title={t("add_services")}>
         <IconButton
           onClick={() => {
             axiosClient
               .post(`defineServices/${selectedMeal.id}`)
               .then(({ data }) => {
-                console.log(data.data, "data");
                 setSelectedMeal(data.data);
-                
               });
           }}
         >
@@ -131,40 +118,33 @@ export function MealChildrenTableMobile({
         </IconButton>
       </Tooltip>
 
-      <Table style={{direction:'ltr'}} size="small">
+      <Table style={{ direction: "ltr" }} size="small">
         <TableHead>
           <TableRow>
-            <TableCell>اسم</TableCell>
-            <TableCell>سعر</TableCell>
+            <TableCell>{t("name")}</TableCell>
+            <TableCell>{t("price")}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((meal, index) => {
-            console.log(meal, "meal");
-            return (
-              <TableRow key={meal.id}>
-                <TdCell item={meal} colName={"name"} table={"childMeals"}>
-                  {meal.name}
-                </TdCell>
-          
-                <TdCell
-                  show
-                  sx={{ width: "60px", textAlign: "center" }}
-                  item={meal}
-                  colName={"price"}
-                  table={"childMeals"}
-                >
-                  {meal.price}
-                </TdCell>
-               
-              </TableRow>
-            );
-          })}
+          {data.map((meal) => (
+            <TableRow key={meal.id}>
+              <TdCell item={meal} colName="name" table="childMeals">
+                {meal.name}
+              </TdCell>
+              <TdCell
+                sx={{ width: "60px", textAlign: "center" }}
+                item={meal}
+                colName="price"
+                table="childMeals"
+              >
+                {meal.price}
+              </TdCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>
   );
 }
-
 
 export default MealChildrenTable;

@@ -27,7 +27,7 @@ type Status = [
   "Pending",
   "Confirmed",
   "Completed",
-  "In Preparation",
+  // "In Preparation",
   "Delivered",
   "Cancelled"
 ];
@@ -38,14 +38,26 @@ function Orders() {
     "Pending",
     "Confirmed",
     "Completed",
-    "In Preparation",
+    // "In Preparation",
     "Delivered",
     "Cancelled",
   ];
   const [orders, setOrders] = useState<Order[]>([]);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+
+     
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const [search, setSearch] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState<null | string>(null);
-  const [createdAt, setCreatedAt] = useState(dayjs());
+  const [createdAt, setCreatedAt] = useState(null);
   const [page, setPage] = useState(20);
   const [links, setLinks] = useState([]);
   const {selectedOrder, setSelectedOrder} =useOutletContext()
@@ -60,6 +72,16 @@ function Orders() {
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };
+  useEffect(()=>{
+    setOrders((prev)=>{
+      return prev.map((o)=>{
+        if(selectedOrder?.id === o.id){
+          return selectedOrder
+        }
+        return o;
+      })
+    })
+  },[selectedOrder])
 
   useEffect(() => {
     setSelectedOrder(null)
@@ -69,6 +91,7 @@ function Orders() {
           status: selectedStatus,
           date:createdAt?.format('YYYY-MM-DD') ?? null,
           name:search
+          
         })
         .then(({ data: { data, links } }) => {
           setOrders(data);
@@ -146,7 +169,8 @@ function Orders() {
         <Button variant="contained" href={`${webUrl}orders`}>
           {t("report")}
         </Button>
-        <Stack textAlign="center" alignItems="center" direction="column">
+        <Stack textAlign="center" alignItems="center"        direction={isMobile ? "column" : "row"}
+        >
           <Box>
             <Tooltip title={t("filter")}>
               <IconButton>
@@ -155,7 +179,8 @@ function Orders() {
               </IconButton>
             </Tooltip>
           </Box>
-          <Stack gap={1} direction="row">
+          <Stack gap={1}        direction={isMobile ? "column" : "row"}
+>
             {statuses.map((s) => (
               <Chip
                 color={s === selectedStatus ? "primary" : "default"}
@@ -170,7 +195,8 @@ function Orders() {
       </Stack>
       <Stack
         sx={{ m: 2 }}
-        direction="row"
+               direction={isMobile ? "column" : "row"}
+
         gap={1}
         justifyContent="space-around"
         alignItems="center"
@@ -194,7 +220,18 @@ function Orders() {
         >
           <Typography variant="h6">{t("paid")}</Typography>
           <Typography variant="h6">
-            {orders.reduce((prev, curr) => prev + curr.amount_paid, 0).toFixed(3)}
+            {orders.reduce((prev, curr) => prev + Number(curr.amount_paid), 0).toFixed(3)}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          className="shadow-lg text-center items-center w-[150px] bg-[var(--primary)] p-1 rounded-full"
+        >
+          <Typography variant="h6">{t("discount")}</Typography>
+          <Typography variant="h6">
+            {orders.reduce((prev, curr) => prev + Number(curr.discount), 0).toFixed(3)}
           </Typography>
         </Stack>
         <Stack
@@ -206,7 +243,7 @@ function Orders() {
           <Typography variant="h6">{t("remaining")}</Typography>
           <Typography variant="h6">
             {(
-              orders.reduce((prev, curr) => prev + curr.totalPrice, 0) -
+              (orders.reduce((prev, curr) => prev + curr.totalPrice, 0)-orders.reduce((prev, curr) => prev + curr.discount, 0)) -
               orders.reduce((prev, curr) => prev + curr.amount_paid, 0)
             ).toFixed(3)}
           </Typography>

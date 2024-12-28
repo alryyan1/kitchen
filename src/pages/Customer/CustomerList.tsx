@@ -9,10 +9,12 @@ import {
   TableRow,
   IconButton,
   TablePagination,
+  Checkbox,
 } from "@mui/material";
 import { Edit, Trash2 } from "lucide-react";
 import { Customer } from "@/Types/types";
 import { useTranslation } from "react-i18next";
+import axiosClient from "@/helpers/axios-client";
 
 interface CustomerListProps {
   customers: Customer[];
@@ -52,6 +54,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({
               <TableCell>{t("phone")}</TableCell>
               <TableCell>{t("area")}</TableCell>
               <TableCell>{t("state")}</TableCell>
+              <TableCell>متجر</TableCell>
               <TableCell align="right">{t("actions")}</TableCell>
             </TableRow>
           </TableHead>
@@ -64,6 +67,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({
                   <TableCell>{customer.phone}</TableCell>
                   <TableCell>{customer.area}</TableCell>
                   <TableCell>{customer.state}</TableCell>
+                  <TableCell><Checkbox defaultChecked={customer.is_store == 1} onChange={(e)=>{
+                    axiosClient.patch(`customers/${customer.id}`,{is_store:e.target.checked ? 1:0})
+                  }}/></TableCell>
                   <TableCell align="right">
                     <IconButton
                       color="primary"

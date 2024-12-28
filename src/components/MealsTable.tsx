@@ -22,10 +22,12 @@ import { useMealsStore } from '@/stores/MealsStore';
 import { useTranslation } from 'react-i18next';
 import { webUrl } from '@/helpers/constants';
 import { Plus, Upload } from 'lucide-react';
-import { Stack } from '@mui/system';
+import { Stack, textAlign, width } from '@mui/system';
 import ImageGallery from '../pages/gallary';
 import AddItemDialog from './AddItemDialog';
-const MealTable: React.FC = () => {
+import ph from './../assets/images/ph.jpg'
+
+const MealTable: React.FC = ({selectedCategory}) => {
   const { t } = useTranslation('meals'); // i18n hook for translations
   const [search, setSearch] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -86,13 +88,14 @@ const MealTable: React.FC = () => {
        }} color='primary'><Plus/></IconButton></Tooltip> 
 
       <Typography variant="h5" textAlign="center">
-        {t('basicServices')}
+       <span className='text-gray-500'> ({selectedCategory?.name})</span>
       </Typography>
       <Table size="small" className="text-sm border border-gray-300">
         <TableHead className="bg-gray-100">
           <TableRow>
             <TableCell>{t('code')}</TableCell>
             <TableCell>{t('name')}</TableCell>
+            {/* <TableCell>{t('price')}</TableCell> */}
             <TableCell>{t('category')}</TableCell>
             <TableCell>{t('image')}</TableCell>
             <TableCell>{t('uploadImage')}</TableCell>
@@ -101,7 +104,13 @@ const MealTable: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredMeals.map((meal: Meal) => (
+          {filteredMeals.filter((m)=>{
+            if (selectedCategory) {
+              return m.category_id == selectedCategory.id
+            }else{
+              return true
+            }
+          }).map((meal: Meal) => (
             <TableRow
               key={meal.id}
               sx={{
@@ -113,10 +122,13 @@ const MealTable: React.FC = () => {
               <TdCell table="meals" colName="name" item={meal}>
                 {meal.name}
               </TdCell>
+              {/* <TdCell sx={{width:'50px',textAlign:'center'}} table="meals" colName="price" item={meal}>
+                {meal.price}
+              </TdCell> */}
               <TableCell>{meal?.category?.name}</TableCell>
               <TableCell>
                 <img
-                  src={`${webUrl}/images/${meal.image_url}`}
+                  src={meal.image_url  == null ? ph: `${webUrl}/images/${meal.image_url}`}
                   alt={meal.name}
                   style={{ width: '100px' }}
                 />

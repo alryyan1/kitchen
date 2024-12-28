@@ -1,6 +1,6 @@
 import { Eye, Minus, Plus, Trash2 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { Meal, Mealorder, Requestedchildmeal } from "../Types/types";
+import { Meal, Mealorder, Order, Requestedchildmeal } from "../Types/types";
 import BasicPopover from "./Mypopover";
 import MealChildrenTable from "./MealChildrenTable";
 import { ColorPicker, ColorPickerChangeEvent } from 'primereact/colorpicker';
@@ -20,8 +20,12 @@ import RequestedChildrenTable from "./RequestedChildrenTable";
 import { Box } from "@mui/system";
 import RequestedServices from "./RequestedServices";
 import Incremenor from "./Incremenor";
+import CartItemOptions from "./CartItemOptions";
+import { useOutletContext } from "react-router-dom";
+import CartItemOptionsMobile from "./CartItemOptionsMobile";
 interface CartItemProbs {
   item: Mealorder;
+  selectedOrder:Order;
   updateQuantity: (increment: boolean, item: Mealorder) => void;
   isMultible: string;
   setSelectedOrder: (item: Mealorder) => void;
@@ -32,7 +36,8 @@ function CartItem({
   updateQuantity,
   item,
   setSelectedOrder,
-  updateRequestedQuantity
+  updateRequestedQuantity,
+  selectedOrder
 }: CartItemProbs) {
 
   const [show,setShow] = useState(false)
@@ -57,14 +62,17 @@ function CartItem({
  
       
   },[color])
+    const {isIpadPro, setIsIpadPro} = useOutletContext();
+  
   return (
     <Badge  color="primary" badgeContent={item.requested_child_meals.length}>
       <div style={{border:'1px dashed lightblue',width:'100%'}}
     >
-      <Box  sx={{overflow:'hidden'}}
+      <Box 
         className={` flex items-center justify-between px-4 p-2 bg-white rounded-xl shadow-md cart-item  ${isMultible}`}
       >
         <BasicPopover
+        selectedOrder={selectedOrder}
           title={item.meal.name}
           content={
             <span className="text-gray-700">
@@ -77,29 +85,11 @@ function CartItem({
             </span>
           }
         />
-
-        <div className="flex items-center  ">
-        <ColorPicker value={item.color} onChange={(e:ColorPickerChangeEvent)=>{
-            setColor(e.value)
-          }} />
-          <span className="w-16 text-center">{(item.totalPrice * item.quantity).toFixed(3) }</span>
-          <IconButton color="error" onClick={() => onDelete(item)} size="small">
-            <Trash2 size={18} />
-          </IconButton>
-          <IconButton onClick={()=>{
-            setShow(!show)
-          }}>
-            <Eye/>
-          </IconButton>
-
-     
-          <Incremenor updateQuantity={updateQuantity} requested={item} />
-
-        </div>
+<CartItemOptions setSelectedOrder={setSelectedOrder} selectedOrder={selectedOrder} item={item} onDelete={onDelete} setShow={setShow} show={show} setColor={setColor} updateQuantity={updateQuantity}/>
       </Box>
       {item.requested_child_meals.length > 0 && (
 
-        <RequestedServices item={item}  show={show} updateRequestedQuantity={updateRequestedQuantity}/>
+        <RequestedServices setSelectedOrder={setSelectedOrder} item={item}  show={show} updateRequestedQuantity={updateRequestedQuantity}/>
       )}
     </div>
     </Badge>

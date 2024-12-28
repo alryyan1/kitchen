@@ -21,7 +21,7 @@ const AddItemDialog = ({handleClose,open}) => {
     <div className="">
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-            <Typography>Add Item</Typography>
+            <Typography> </Typography>
         </DialogTitle>
         <DialogContent className="">
             <ProductForm handleClose={handleClose} open={open}/>
