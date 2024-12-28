@@ -17,6 +17,7 @@
     "complete":"complete",
     "changeState":"Change State" ,
     "handed":"Delivery",
-    "cancel":"Cancel"
+    "cancel":"Cancel",
+    "delivery":"Delivery"
   }
   

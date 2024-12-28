@@ -19,7 +19,7 @@ function MealItem({meal,selectedOrder,setSelectedOrder,selected,setMealOrder,set
   const [selectEffect,setSelectEffect] = useState('')
   // const [showRequestedDialog,setShowRequestedDialog] = useState(false)
   // const [mealOrder,setMealOrder] = useState<Mealorder|null>(null)
-  console.log('meal is selected',selected)
+  console.log('setShowRequestedDialog',setShowRequestedDialog)
   
   const mealOrderHandler = ()=>{
     if (meal.child_meals.length > 1) {
@@ -61,7 +61,7 @@ function MealItem({meal,selectedOrder,setSelectedOrder,selected,setMealOrder,set
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         border: selected ? '2px dashed #cf060559' : 'none',
-        width:'200px'
+        width:'100px'
       }}
     >
       {/* <div className=" "> */}

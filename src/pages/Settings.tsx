@@ -198,6 +198,48 @@ function Settings() {
             }}
           />
        
+       <TextField
+            defaultValue={settings?.authorized_phones}
+            sx={{ mb: 1 }}
+            label={t('authorized phones')}
+            fullWidth
+            variant='standard'
+            onChange={(e) => {
+              axiosClient.post("settings", {
+                colName: "authorized_phones",
+                data: e.target.value,
+              });
+            }}
+          />
+       
+       <TextField
+            defaultValue={settings?.token}
+            sx={{ mb: 1 }}
+            label={t('token ')}
+            fullWidth
+            variant='standard'
+            onChange={(e) => {
+              axiosClient.post("settings", {
+                colName: "token",
+                data: e.target.value,
+              });
+            }}
+          />
+             
+       <TextField
+            defaultValue={settings?.token}
+            sx={{ mb: 1 }}
+            label={t('instance ')}
+            fullWidth
+            variant='standard'
+            onChange={(e) => {
+              axiosClient.post("settings", {
+                colName: "instance",
+                data: e.target.value,
+              });
+            }}
+          />
+       
 
           <TextField
             defaultValue={settings?.vatin}

@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import {Order } from "@/Types/types";
+import { Order } from "@/Types/types";
 import OrderHeader from "@/pages/OrderrHeader";
 import OrderHeaderMobile from "./OrderHeaderMobile";
 
@@ -15,7 +15,7 @@ interface SettingsDialogProbs {
   open: boolean;
   handleClose: () => void;
   selectedOrder: Order;
-  setSelectedOrder:Dispatch<SetStateAction<Order|null>>;
+  setSelectedOrder: Dispatch<SetStateAction<Order | null>>;
   setIsFormOpen: Dispatch<SetStateAction<boolean>>;
   setOrders: Dispatch<SetStateAction<Order[]>>;
 }
@@ -26,21 +26,23 @@ const SettingsDialog = ({
   selectedOrder,
   setSelectedOrder,
   setIsFormOpen,
-  setOrders
+  setOrders,
 }: SettingsDialogProbs) => {
-
-
-
   return (
     <div className="">
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle></DialogTitle>
         <DialogContent className="">
-            <OrderHeaderMobile setOrders={setOrders} setIsFormOpen={setIsFormOpen} showNewOrderBtn={false} selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} />
-         
+          <OrderHeaderMobile
+            setOrders={setOrders}
+            setIsFormOpen={setIsFormOpen}
+            showNewOrderBtn={false}
+            selectedOrder={selectedOrder}
+            setSelectedOrder={setSelectedOrder}
+          />
         </DialogContent>
         <DialogActions>
-          <Button  onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Close
           </Button>
         </DialogActions>

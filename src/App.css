@@ -86,10 +86,10 @@ body {
 }
 
 .meal-container {
-  display: grid;
-  gap: 16px; /* Space between grid items */
-  padding: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  gap: 15px; /* Space between grid items */
+  padding: 5px;
+  flex-wrap: wrap;
   text-align: center;
   align-content: start;
   align-items: center;
@@ -171,7 +171,7 @@ body {
 @media (min-width: 768px) {
   .layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     margin-top: 5px;
     gap: 5px;
   }

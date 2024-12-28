@@ -14,7 +14,7 @@ import { Label } from "../components/ui/label";
 import { useAuthContext } from "@/contexts/stateContext";
 import axiosClient from "@/helpers/axios-client";
 import { Button } from "@/components/ui/button";
-import loginBack from "./../assets/images/mariam-bg.jpg";
+import loginBack from "./../assets/images/laundry-1.jpg";
 import { useAuthStore } from "@/AuthStore";
 
 function App() {
@@ -72,7 +72,7 @@ function App() {
         <Card style={{borderRadius:'10px'}} className="rtl text-right rounded-md shadow-md  p-6 text-gray-800">
           <CardHeader>
             <CardTitle className="text-center text-2xl font-bold">
-              Mariam Store
+              Rain Cloud Laundry
             </CardTitle>
           </CardHeader>
           <CardContent>

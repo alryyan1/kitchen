@@ -14,9 +14,10 @@
     "remaining":"متبقي",
     "settings":"الاعدادات",
     "discount":"التخفيض" ,
-    "complete":"انتهاء",
+    "complete":"اكتمال",
     "handed":"تسليم",
     "changeState":"تغيير الحاله",
-    "cancel":"الغاء"
+    "cancel":"  الغاء الطلب",
+    "delivery":"تسليم"
   }
   

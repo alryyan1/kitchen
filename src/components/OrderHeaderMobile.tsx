@@ -129,7 +129,7 @@ function OrderHeaderMobile({
     });
   };
   return (
-    <Stack direction={"row"} gap={1}>
+    <Stack direction={"column"} gap={1}>
        <Stack
         gap={1}
         sx={{
@@ -149,7 +149,7 @@ function OrderHeaderMobile({
           </LoadingButton>
         )}
 
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction={"column"} alignItems={"center"}>
           <Button
             size="small"
             onClick={() => {
@@ -192,13 +192,13 @@ function OrderHeaderMobile({
           ></Autocomplete>
         </Stack>
 
-        {showNewOrderBtn && (
+   
           <PayOptions
             selectedOrder={selectedOrder}
             setSelectedOrder={setSelectedOrder}
             key={selectedOrder.id}
           />
-        )}
+        
 
         <MyDateField2
           label="تاريخ التسليم"
@@ -255,7 +255,7 @@ function OrderHeaderMobile({
           defaultValue={selectedOrder?.draft}
           fullWidth
           multiline
-          rows={8}
+          rows={2}
         ></TextField>
       </Stack>
     {selectedOrder?.meal_orders?.length > 0 &&  <Stack>
