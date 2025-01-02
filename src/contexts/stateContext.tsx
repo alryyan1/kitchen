@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const navigate =  useNavigate()
+  
 
   const add = (actionItem,setState)=>{
 

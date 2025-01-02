@@ -31,7 +31,7 @@ function CartItemOptions({setSelectedOrder,setShow,onDelete,item,show,updateQuan
         <Eye/>
       </IconButton>
 
-      <input  onFocus={(event) => {
+      <input  disabled={selectedOrder.order_confirmed} onFocus={(event) => {
         event.target.select();
       }} defaultValue={item.quantity} onChange={(e)=>{
         updateQuantity(e.target.value, item)

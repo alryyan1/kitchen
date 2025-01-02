@@ -42,7 +42,7 @@ import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./../i18n";
 import ArriavalDialog from "@/components/ArriavalDialog";
 import alarm from "./../assets/alarm.wav";
-import { Meal } from "@/Types/types";
+import { Meal, User } from "@/Types/types";
 import LoginDialog from "@/components/LoginDialog";
 import { useAuthStore } from "@/AuthStore";
 
@@ -100,8 +100,9 @@ export default function DashboardLayoutBasic() {
   const {openLoginDialog,setCloseLoginDialog,setOpenLoginDialog} =  useAuthStore((state)=>state)
   console.log(openLoginDialog,'openDialog')
   const navigate =  useNavigate()
-   const {setUser,setToken,} = useAuthContext()
+   const {setToken} = useAuthContext()
     const [meals,setMeals] = React.useState<Meal[]>([]);
+    const [user,setUser] = React.useState<User|null>(null)
    React.useEffect(()=>{
       axiosClient.get('meals').then(({data})=>{
         setMeals(data)
@@ -148,92 +149,123 @@ export default function DashboardLayoutBasic() {
   }, []);
   const { t } = useTranslation("layout");
 
-  const NAVIGATION: Navigation = [
-    {
-      kind: "header",
-      title: t("Main items"), // Use translation key for "Main items"
-    },
-    {
-      segment: "dashboard",
-      title: t("Dashboard"), // Use translation key for "Dashboard"
-      icon: <DashboardIcon />,
-    },
-    {
-      segment: "makeOrder",
-      title: t("New Order"), // Use translation key for "New Order"
-      icon: <AddShoppingCartIcon />,
-    },
-    {
-      segment: "orders",
-      title: t("Orders"), // Use translation key for "Orders"
-      icon: <List />,
-    },
+  // const NAVIGATION: Navigation = [
+  //   {
+  //     kind: "header",
+  //     title: t("Main items"), // Use translation key for "Main items"
+  //   },
+  //   {
+  //     segment: "dashboard",
+  //     title: t("Dashboard"), // Use translation key for "Dashboard"
+  //     icon: <DashboardIcon />,
+  //   },
+  //   {
+  //     segment: "makeOrder",
+  //     title: t("New Order"), // Use translation key for "New Order"
+  //     icon: <AddShoppingCartIcon />,
+  //   },
+  //   {
+  //     segment: "orders",
+  //     title: t("Orders"), // Use translation key for "Orders"
+  //     icon: <List />,
+  //   },
 
-    {
-      segment: "stats",
-      title: t("Order Quantities"), // Use translation key for "Order Quantities"
-      icon: <Scale />,
-    },
-    // {
-    //   segment: "expenses",
-    //   title: t("Expenses"), // Use translation key for "Expenses"
-    //   icon: <AttachMoneyIcon />,
-    // },
-    {
-      segment: "menu",
-      title: t("Menu"), // Use translation key for "Menu"
-      icon: <RestaurantMenuIcon />,
-    },
-    // {
-    //   segment: "reservations2",
-    //   title: t("Reservations"), // Use translation key for "Reservations"
-    //   icon: <BookmarkAddedIcon />,
-    // },
-    {
-      kind: "divider",
-    },
-    {
-      kind: "header",
-      title: t("Analytics"), // Use translation key for "Analytics"
-    },
-    {
-      segment: "config",
-      title: t("Settings"), // Use translation key for "Settings"
-      icon: <SettingsIcon />,
-      children: [
-        {
-          segment: "meals",
-          title: t("Services"), // Use translation key for "Services"
-          icon: <Grid2x2PlusIcon />,
-        },
-        {
-          segment: "MealCategories",
-          title: t("Categories"), // Use translation key for "Categories"
-          icon: <LayoutPanelTop />,
-        },
-        {
-          segment: "customers",
-          title: t("Customers"), // Use translation key for "Customers"
-          icon: <Users />,
-        },
-        {
-          segment: "users",
-          title: t("Users"), // Use translation key for "Users"
-          icon: <Users />,
-        },
-        {
-          segment: "services",
-          title: t("Sub Services"), // Use translation key for "Sub Services"
-          icon: <HandPlatter />,
-        },
-        {
-          segment: "settings",
-          title: t("Other"), // Use translation key for "Other"
-          icon: <Users />,
-        },
-      ],
-    },
-  ];
+  //   {
+  //     segment: "stats",
+  //     title: t("Order Quantities"), // Use translation key for "Order Quantities"
+  //     icon: <Scale />,
+  //   },
+  //   {
+  //     segment: "expenses",
+  //     title: t("Expenses"), // Use translation key for "Expenses"
+  //     icon: <AttachMoneyIcon />,
+  //   },
+  //   {
+  //     segment: "menu",
+  //     title: t("Menu"), // Use translation key for "Menu"
+  //     icon: <RestaurantMenuIcon />,
+  //   },
+  //   // {
+  //   //   segment: "reservations2",
+  //   //   title: t("Reservations"), // Use translation key for "Reservations"
+  //   //   icon: <BookmarkAddedIcon />,
+  //   // },
+  //   {
+  //     kind: "divider",
+  //   },
+  //   {
+  //     kind: "header",
+  //     title: t("Analytics"), // Use translation key for "Analytics"
+  //   },
+  //   {
+  //     segment: "config",
+  //     title: t("Settings"), // Use translation key for "Settings"
+  //     icon: <SettingsIcon />,
+  //     children: [
+  //       {
+  //         segment: "meals",
+  //         title: t("Services"), // Use translation key for "Services"
+  //         icon: <Grid2x2PlusIcon />,
+  //       },
+  //       {
+  //         segment: "MealCategories",
+  //         title: t("Categories"), // Use translation key for "Categories"
+  //         icon: <LayoutPanelTop />,
+  //       },
+  //       {
+  //         segment: "customers",
+  //         title: t("Customers"), // Use translation key for "Customers"
+  //         icon: <Users />,
+  //       },
+  //       {
+  //         segment: "users",
+  //         title: t("Users"), // Use translation key for "Users"
+  //         icon: <Users />,
+  //       },
+  //       {
+  //         segment: "services",
+  //         title: t("Sub Services"), // Use translation key for "Sub Services"
+  //         icon: <HandPlatter />,
+  //       },
+  //       {
+  //         segment: "settings",
+  //         title: t("Other"), // Use translation key for "Other"
+  //         icon: <Users />,
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  const NAVIGATION = 
+   user?.routes?.map((route)=>{
+
+    if (route.route.id == 7) {
+      return {
+        segment: route.route.path,
+        title: t(route.route.name),
+        icon: route.icon,
+        children: 
+          user.sub_routes.map((sub)=>{
+           
+          return {
+            segment: sub.sub_route.path,
+            title: t(sub.sub_route.name),
+            icon: sub.icon,
+          }
+        })
+      }
+    }else{
+        return {
+        segment: route.route.path,
+        title: t(route.route.name),
+        icon: route.icon,
+      }
+    }
+    
+    }) ?? []
+  ;
+  console.log(user,'user')
+  console.log(NAVIGATION,'navigation')
   const [orders, setOrders] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [selectedOrder, setSelectedOrder] = React.useState(null);

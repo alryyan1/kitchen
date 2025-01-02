@@ -60,9 +60,9 @@ function RequestedChildrenTable({
               }
             }}/>
           </TableCell>
-          <TableCell>اسم</TableCell>
-          <TableCell>الكميه</TableCell>
-          <TableCell>سعر</TableCell>
+          <TableCell>Service</TableCell>
+          {/* <TableCell>الكميه</TableCell> */}
+          <TableCell>Price</TableCell>
           {/* <TableCell>الاشخاص</TableCell> */}
           {/* <TableCell>الوزن</TableCell> */}
           {/* <TableCell>-</TableCell> */}
@@ -85,7 +85,7 @@ function RequestedChildrenTable({
                 />
               </TableCell>
               <TableCell>{child.service.name}</TableCell>
-              <TableCell>{child.quantity}</TableCell>
+              {/* <TableCell>{child.quantity}</TableCell> */}
               <TableCell>{child.price}</TableCell>
               {/* <TableCell>{child.people_count}</TableCell> */}
               {/* <TableCell>{child.weight}</TableCell> */}
