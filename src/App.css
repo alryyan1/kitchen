@@ -115,7 +115,7 @@ body {
 }
 .menu {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1.7, 1.3fr);
   gap: 10px;
 }
 
@@ -171,7 +171,7 @@ body {
 @media (min-width: 768px) {
   .layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.7fr 1.3fr;
     margin-top: 5px;
     gap: 5px;
   }

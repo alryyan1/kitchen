@@ -171,8 +171,14 @@ function Cart({ selectedOrder, setSelectedOrder, printHandler }: CartProps) {
                 </span>
               </Stack >
               <Stack direction={'column'}>
-              <span className="text-gray-600">{t("delivery_fee")}</span>
+                <span className="text-gray-600">{t("discount")}</span>
+                <span className="text-gray-900">
+                  {selectedOrder.discount.toFixed(3)}
+                </span>
+              </Stack >
+              <Stack direction={'column'}>
              {selectedOrder.is_delivery && <span className="text-gray-900">
+              <span className="text-gray-600">{t("delivery_fee")}</span>
                 <TextField
                  onFocus={(event) => {
                   event.target.select();

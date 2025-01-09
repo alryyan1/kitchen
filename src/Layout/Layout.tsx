@@ -124,7 +124,7 @@ export default function DashboardLayoutBasic() {
   }, [])
   React.useEffect(() => {
     const mediaQuery = window.matchMedia(
-      '(min-width: 768px) and (max-width: 1366px)'
+      '(min-width: 768px) and (max-width: 1266px)'
     );
 
     const handleResize = (e) => setIsIpadPro(e.matches);
